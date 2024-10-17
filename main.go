@@ -6,7 +6,6 @@ import (
 	"net/http"
 	"strconv"
 	"strings"
-	"time"
 )
 
 const (
@@ -110,6 +109,6 @@ func main() {
 		}
 
 		// Sleep for 10 seconds before the next request
-		time.Sleep(10 * time.Second)
+		//time.Sleep(10 * time.Second)
 	}
 }
