@@ -6,10 +6,11 @@ import (
 	"net/http"
 	"strconv"
 	"strings"
+	"time"
 )
 
 const (
-	serverURL        = "https://srv.msk01.gigacorp.local/_stats"
+	serverURL        = "http://srv.msk01.gigacorp.local/_stats"
 	loadAvgThreshold = 30.0
 	memoryUsageLimit = 0.80 // 80%
 	diskUsageLimit   = 0.90 // 90%
@@ -109,6 +110,6 @@ func main() {
 		}
 
 		// Sleep for 10 seconds before the next request
-		//time.Sleep(10 * time.Second)
+		time.Sleep(10 * time.Second)
 	}
 }
