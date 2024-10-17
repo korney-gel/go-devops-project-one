@@ -65,25 +65,25 @@ func checkThresholds(stats []float64) {
 
 	// Load Average check
 	if loadAvg > loadAvgThreshold {
-		fmt.Printf("Load Average is too high: %.2f\n", loadAvg)
+		fmt.Printf("Load Average is too high: %.0f\n", loadAvg)
 	}
 
 	// Memory usage check
 	memoryUsage := usedMemory / totalMemory
 	if memoryUsage > memoryUsageLimit {
-		fmt.Printf("Memory usage too high: %.2f%%\n", memoryUsage*100)
+		fmt.Printf("Memory usage too high: %.0f%%\n", memoryUsage*100)
 	}
 
 	// Disk space check
 	freeDisk := (totalDisk - usedDisk) / (1024 * 1024)
 	if usedDisk/totalDisk > diskUsageLimit {
-		fmt.Printf("Free disk space is too low: %.2f MB left\n", freeDisk)
+		fmt.Printf("Free disk space is too low: %.0f MB left\n", freeDisk)
 	}
 
 	// Network bandwidth check
 	freeNet := (totalNet - usedNet) / (1024 * 1024) * 8
 	if usedNet/totalNet > netUsageLimit {
-		fmt.Printf("Network bandwidth usage high: %.2f Mbit/s available\n", freeNet)
+		fmt.Printf("Network bandwidth usage high: %.0f Mbit/s available\n", freeNet)
 	}
 }
 
