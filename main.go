@@ -12,7 +12,7 @@ import (
 const (
 	serverURL        = "http://srv.msk01.gigacorp.local/_stats"
 	loadAvgThreshold = 30
-	memoryUsageLimit = 80 // 80%
+	memoryUsageLimit = 1  // 80%
 	diskUsageLimit   = 90 // 90%
 	netUsageLimit    = 90 // 90%
 )
@@ -71,7 +71,7 @@ func checkThresholds(stats []int) {
 	}
 
 	// Memory usage check
-	memoryUsage := (usedMemory / totalMemory)
+	memoryUsage := (usedMemory / totalMemory) * 100
 	if memoryUsage > memoryUsageLimit {
 		fmt.Printf("Memory usage too high: %d%%\n", memoryUsage)
 	}
