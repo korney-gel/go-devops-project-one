@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"io"
-	"math"
 	"net/http"
 	"strconv"
 	"strings"
@@ -68,25 +67,25 @@ func checkThresholds(stats []int) {
 
 	// Load Average check
 	if loadAvg > loadAvgThreshold {
-		fmt.Printf("Load Average is too high: %.0f\n", loadAvg)
+		fmt.Printf("Load Average is too high: %d\n", loadAvg)
 	}
 
 	// Memory usage check
 	memoryUsage := usedMemory / totalMemory
 	if memoryUsage > memoryUsageLimit {
-		fmt.Printf("Memory usage too high: %.0f%%\n", math.Round(memoryUsage*100))
+		fmt.Printf("Memory usage too high: %d%%\n", memoryUsage*100)
 	}
 
 	// Disk space check
 	freeDiskMb := (totalDisk - usedDisk) / (1024 * 1024)
 	if usedDisk/totalDisk > diskUsageLimit {
-		fmt.Printf("Free disk space is too low: %.0f Mb left\n", math.Floor(freeDiskMb))
+		fmt.Printf("Free disk space is too low: %d Mb left\n", freeDiskMb)
 	}
 
 	// Network bandwidth check
 	freeNet := (totalNet - usedNet) / (1024 * 1024)
 	if usedNet/totalNet > netUsageLimit {
-		fmt.Printf("Network bandwidth usage high: %.0f Mbit/s available\n", math.Round(freeNet))
+		fmt.Printf("Network bandwidth usage high: %d Mbit/s available\n", freeNet)
 	}
 }
 
