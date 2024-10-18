@@ -12,10 +12,10 @@ import (
 
 const (
 	serverURL        = "http://srv.msk01.gigacorp.local/_stats"
-	loadAvgThreshold = 30.0
-	memoryUsageLimit = 0.80 // 80%
-	diskUsageLimit   = 0.90 // 90%
-	netUsageLimit    = 0.90 // 90%
+	loadAvgThreshold = 30
+	memoryUsageLimit = 80 // 80%
+	diskUsageLimit   = 90 // 90%
+	netUsageLimit    = 90 // 90%
 )
 
 func fetchServerStats() (string, error) {
@@ -41,15 +41,13 @@ func fetchServerStats() (string, error) {
 	return string(body), nil
 }
 
-func parseStats(data string) ([]float64, error) {
+func parseStats(data string) ([]int, error) {
 	parts := strings.Split(data, ",")
-	if len(parts) != 7 {
-		return nil, fmt.Errorf("unexpected data format")
-	}
+	stats := make([]int, len(parts))
 
-	stats := make([]float64, 7)
 	for i, part := range parts {
-		value, err := strconv.ParseFloat(part, 64)
+		part = strings.TrimSpace(part) // Убираем возможные пробелы
+		value, err := strconv.Atoi(part)
 		if err != nil {
 			return nil, err
 		}
@@ -59,7 +57,7 @@ func parseStats(data string) ([]float64, error) {
 	return stats, nil
 }
 
-func checkThresholds(stats []float64) {
+func checkThresholds(stats []int) {
 	loadAvg := stats[0]
 	totalMemory := stats[1]
 	usedMemory := stats[2]
