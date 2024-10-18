@@ -76,7 +76,7 @@ func checkThresholds(stats []float64) {
 	// Memory usage check
 	memoryUsage := usedMemory / totalMemory
 	if memoryUsage > memoryUsageLimit {
-		fmt.Printf("Memory usage too high: %.0f%%\n", memoryUsage*100)
+		fmt.Printf("Memory usage too high: %.0f%%\n", math.Round(memoryUsage*100))
 	}
 
 	// Disk space check
@@ -88,7 +88,7 @@ func checkThresholds(stats []float64) {
 	// Network bandwidth check
 	freeNet := (totalNet - usedNet) / (1024 * 1024)
 	if usedNet/totalNet > netUsageLimit {
-		fmt.Printf("Network bandwidth usage high: %.0f Mbit/s available\n", math.Floor(freeNet))
+		fmt.Printf("Network bandwidth usage high: %.0f Mbit/s available\n", math.Round(freeNet))
 	}
 }
 
