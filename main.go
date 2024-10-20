@@ -11,10 +11,10 @@ import (
 
 const (
 	serverURL        = "http://srv.msk01.gigacorp.local/_stats"
-	loadAvgThreshold = 30
-	memoryUsageLimit = 80 // 80%
-	diskUsageLimit   = 90 // 90%
-	netUsageLimit    = 90 // 90%
+	loadAvgThreshold = 30.0
+	memoryUsageLimit = 80.0 // 80%
+	diskUsageLimit   = 90.0 // 90%
+	netUsageLimit    = 90.0 // 90%
 )
 
 func fetchServerStats() (string, error) {
@@ -40,13 +40,13 @@ func fetchServerStats() (string, error) {
 	return string(body), nil
 }
 
-func parseStats(data string) ([]int, error) {
+func parseStats(data string) ([]float64, error) {
 	parts := strings.Split(data, ",")
-	stats := make([]int, len(parts))
+	stats := make([]float64, len(parts))
 
 	for i, part := range parts {
 		part = strings.TrimSpace(part) // Убираем возможные пробелы
-		value, err := strconv.Atoi(part)
+		value, err := strconv.ParseFloat(part, 64)
 		if err != nil {
 			return nil, err
 		}
@@ -56,7 +56,7 @@ func parseStats(data string) ([]int, error) {
 	return stats, nil
 }
 
-func checkThresholds(stats []int) {
+func checkThresholds(stats []float64) {
 	loadAvg := stats[0]
 	totalMemory := stats[1]
 	usedMemory := stats[2]
@@ -67,25 +67,25 @@ func checkThresholds(stats []int) {
 
 	// Load Average check
 	if loadAvg > loadAvgThreshold {
-		fmt.Printf("Load Average is too high: %d\n", loadAvg)
+		fmt.Printf("Load Average is too high: %d\n", int(loadAvg))
 	}
 
 	// Memory usage check
 	memoryUsage := (usedMemory / totalMemory) * 100
 	if memoryUsage > memoryUsageLimit {
-		fmt.Printf("Memory usage too high: %d%%\n", memoryUsage)
+		fmt.Printf("Memory usage too high: %d%%\n", int(memoryUsage))
 	}
 
 	// Disk space check
-	freeDiskMb := (totalDisk - usedDisk) / 1000000
+	freeDiskMb := (totalDisk - usedDisk) / 1048576
 	if (usedDisk/totalDisk)*100 > diskUsageLimit {
-		fmt.Printf("Free disk space is too low: %d Mb left\n", freeDiskMb)
+		fmt.Printf("Free disk space is too low: %d Mb left\n", int(freeDiskMb))
 	}
 
 	// Network bandwidth check
-	freeNet := (totalNet - usedNet) / 1000000
+	freeNet := (totalNet - usedNet) / 1048576
 	if (usedNet/totalNet)*100 > netUsageLimit {
-		fmt.Printf("Network bandwidth usage high: %d Mbit/s available\n", freeNet)
+		fmt.Printf("Network bandwidth usage high: %d Mbit/s available\n", int(freeNet))
 	}
 }
 
