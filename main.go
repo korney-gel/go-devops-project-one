@@ -83,7 +83,7 @@ func checkThresholds(stats []float64) {
 	}
 
 	// Network bandwidth check
-	freeNet := (totalNet - usedNet) / 1048576
+	freeNet := (totalNet - usedNet) * 8 / 1048576
 	if (usedNet/totalNet)*100 > netUsageLimit {
 		fmt.Printf("Network bandwidth usage high: %d Mbit/s available\n", int(freeNet))
 	}
