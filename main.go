@@ -12,7 +12,7 @@ import (
 const (
 	serverURL        = "http://srv.msk01.gigacorp.local/_stats"
 	loadAvgThreshold = 30
-	memoryUsageLimit = 1  // 80%
+	memoryUsageLimit = 80 // 80%
 	diskUsageLimit   = 90 // 90%
 	netUsageLimit    = 90 // 90%
 )
